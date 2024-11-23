@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Journey - Sistema de Status</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>RPG - Sistema de Status</h1>
+        <nav>
+            <ul>
+                <li><a href="#status">Status</a></li>
+                <li><a href="#clans">Clãs</a></li>
+                <li><a href="#missions">Missões</a></li>
+                <li><a href="#contact">Fórum</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="status">
+        <h2>Status Físicos</h2>
+        <p>Exemplo de Status Físico:</p>
+        <table>
+            <tr>
+                <th>Força</th>
+                <th>Velocidade</th>
+                <th>Resistência</th>
+            </tr>
+            <tr>
+                <td id="statusFisico">1000kg</td>
+                <td id="statusVelocidade">300km/h</td>
+                <td id="statusResistencia">1000kg</td>
+            </tr>
+        </table>
+        <button id="atualizarBtn">Atualizar Status</button>
+    </section>
+
+    <section id="clans">
+        <h2>Clãs</h2>
+        <div class="clan">
+            <h3>Konoha</h3>
+            <p>Especialidade: Mokuton</p>
+            <p>Bônus de Chakra: +300</p>
+        </div>
+        <div class="clan">
+            <h3>Uchiha</h3>
+            <p>Especialidade: Sharingan</p>
+            <p>Bônus de Chakra: +300</p>
+        </div>
+    </section>
+
+    <section id="missions">
+        <h2>Missões</h2>
+        <p>Missão de Rank C: Derrote os bandidos.</p>
+        <p>Recompensa: 100PF, 200PR, 100PP, ¥7.500,00</p>
+    </section>
+
+    <footer id="contact">
+        <p>Fórum ou Chat para interações com jogadores.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+section {
+    margin: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+// script.js
+
+function atualizarStatus(fisico, velocidade, resistencia) {
+    document.getElementById("statusFisico").innerHTML = fisico + "kg";
+    document.getElementById("statusVelocidade").innerHTML = velocidade + "km/h";
+    document.getElementById("statusResistencia").innerHTML = resistencia + "kg";
+}
+
+let fisico = 1000;
+let velocidade = 300;
+let resistencia = 1000;
+
+document.getElementById("atualizarBtn").addEventListener("click", function() {
+    fisico += 100; // Atualizar força
+    velocidade += 50;  // Atualizar velocidade
+    resistencia += 100;  // Atualizar resistência
+    atualizarStatus(fisico, velocidade, resistencia);
+});
+// server.js
+const express = require('express');
+const app = express();
+const mysql = require('mysql2');
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'rpg'
+});
+
+app.get('/', (req, res) => {
+    db.query('SELECT * FROM players', (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
+app.listen(3000, () => {
+    console.log("Servidor rodando na porta 3000");
+});
